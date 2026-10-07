@@ -1,0 +1,14 @@
+{
+  "title": "Node App Dashboard",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Total Requests",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total[5m])"
+        }
+      ]
+    }
+  ]
+}
