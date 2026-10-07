@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: your-dockerhub-username/todo-practice:latest
+        image: ghcr.io/skit-devops-2026/devops-24eskcs020:latest
         ports:
         - containerPort: 5000
         env:
