@@ -143,3 +143,56 @@ feature/pr-2
 <!-- PR 4 NEW dummy change -->
 
 
+
+
+# MT2 — Containerization, Deployment, Monitoring & Kubernetes
+
+## 1. Docker Setup
+This project uses Docker for containerization. The `Dockerfile` at the root creates an image containing the Node.js application.
+
+## 2. Docker Build Command
+```bash
+docker build -t devops-24eskcs024 .
+```
+
+## 3. Docker Compose
+The `docker-compose.yml` configures the application and its MongoDB dependency, as well as Prometheus for monitoring.
+```bash
+docker compose up -d
+```
+
+## 4. Container Registry Image
+Image pushed to GHCR automatically by CI workflows.
+
+## 5. Live Deployment URL
+Live URL: https://todo-practice-app.herokuapp.com
+
+## 6. /health endpoint
+The application exposes a health check endpoint at `GET /health` which returns `{"status":"ok"}`.
+
+## 7. /metrics endpoint
+The application exposes Prometheus-compatible metrics at `GET /metrics`.
+
+## 8. Prometheus
+Prometheus configuration is located in `monitoring/prometheus.yml`.
+
+## 9. Monitoring dashboard
+A Grafana dashboard configuration is provided at `monitoring/grafana/dashboards/hostel-fix-dashboard.json`.
+
+## 10. Kubernetes deployment
+Kubernetes Deployment manifests are present in `k8s/deployment.yaml`.
+
+## 11. Kubernetes service
+Kubernetes Service manifests are present in `k8s/service.yaml`.
+
+## 12. Verification commands
+```bash
+# Verify health
+curl http://localhost:5000/health
+
+# Verify metrics
+curl http://localhost:5000/metrics
+
+# Verify Kubernetes manifests
+kubectl apply --dry-run=client -f k8s/
+```
