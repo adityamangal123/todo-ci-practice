@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const { isValidTodoText } = require('./utils');
+const promClient = require('prom-client');
+
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
+collectDefaultMetrics({ register: promClient.register });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -70,6 +74,21 @@ app.delete('/todos/:id', async (req, res) => {
         res.status(200).json({ message: 'Todo deleted successfully' });
     } catch (err) {
         res.status(500).json({ error: 'Failed to delete todo' });
+    }
+});
+
+// GET /health
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
+// GET /metrics
+app.get('/metrics', async (req, res) => {
+    try {
+        res.set('Content-Type', promClient.register.contentType);
+        res.end(await promClient.register.metrics());
+    } catch (err) {
+        res.status(500).end(err);
     }
 });
 
